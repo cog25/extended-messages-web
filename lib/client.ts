@@ -21,6 +21,7 @@ declare interface MessagesClient {
 type ClientOptions = {
     headless?: boolean,
     credentials?: Credentials
+    browserWSEndpoint?: string
 }
 
 export type Credentials = {
@@ -42,8 +43,14 @@ class MessagesClient extends EventEmitter implements MessagesClient {
         return credentials
     }
 
+    private async launchBrowser({ browserWSEndpoint, headless }: ClientOptions) {
+        if(browserWSEndpoint) return puppeteer.connect({ browserWSEndpoint });
+        else return  puppeteer.launch({ headless });
+
+    }
+
     private async launch (options: ClientOptions) {
-        const browser = await puppeteer.launch({ headless: options.headless })
+        const browser = await this.launchBrowser(options);
         this.browser = browser
         const page = await browser.newPage()
         this.page = page
