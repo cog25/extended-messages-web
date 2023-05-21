@@ -1,5 +1,5 @@
-import { EventEmitter } from 'events'
-import puppeteer from 'puppeteer'
+import { EventEmitter } from 'npm:events'
+import puppeteer from 'https://deno.land/x/puppeteer@16.2.0/mod.ts'
 import fs from 'fs'
 
 import MessageService from './service'
